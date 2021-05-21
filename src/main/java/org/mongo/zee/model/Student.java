@@ -9,7 +9,16 @@ public class Student {
 	private String id;
 	private String city;
 	private long salary;
-	
+	private long tax;
+
+	public long getTax() {
+		return tax;
+	}
+
+	public void setTax(long tax) {
+		this.tax = tax;
+	}
+
 	public long getSalary() {
 		return salary;
 	}
