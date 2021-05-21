@@ -6,6 +6,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.mongo.zee.model.Student;
 import org.mongo.zee.repository.StudentRepo;
@@ -96,16 +97,23 @@ public class StudentController {
 		return mongoTemplate.find(query(where("salary").lt(lt).gte(gt)) , Student.class);
 	// 
 	}
-	
-	
+
+
 	@GetMapping("/filterin")
 	public List <Student> filterStudentin() {
 		return mongoTemplate.find(query(where("salary").in(500000, 20000, 10000).and("id").is("4")) , Student.class);
-	// 
+		//
 	}
-	
+//
+//	@GetMapping("/filterinWithFilters")
+//	public List <Student> filterStudent() {
+//		return mongoTemplate.find(query(Criteria.where("salary").lt()));
+//		//
+//	}
 
-	
+
+
+
 	@GetMapping("/filterne")
 	public List <Student> filterStudentne() {
 	return mongoTemplate.find(query(where("salary").ne(10000).and("id").ne("7")) , Student.class);
@@ -204,6 +212,7 @@ public class StudentController {
 	@GetMapping("/groupByCityAndAvgSalary")
 	public Document Avg() {
 		MatchOperation salFilter = match(new Criteria("salary").gt(20000));
+//		MatchOperation salFilter = match(Filters.)
 		GroupOperation countSalaries = group("city").avg("salary").as("avg");
 		SortOperation sortBySalaryDesc = sort(Sort.by(Sort.Direction.DESC, "avg"));
 
