@@ -6,7 +6,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.mongo.zee.model.Student;
 import org.mongo.zee.repository.StudentRepo;
@@ -19,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudentController {
-	
+
 	private StudentRepository studentRepository;
-	
+
 	private StudentRepo studentRepo;
 
 	@Autowired
@@ -41,47 +43,47 @@ public class StudentController {
 	public StudentController(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
 	}
-	
+
 	@GetMapping("/{pageno}")
 	public Page<Student> getStudents(@PathVariable Integer pageno) {
 		List<Student> li = studentRepository.findAll();
-		for(Student stu: li) {
+		for (Student stu : li) {
 			System.out.print(stu.getName());
 		}
 		Pageable paging = PageRequest.of(pageno, 3, Sort.Direction.ASC, "salary");
 		return studentRepository.findAll(paging);
 	}
-	
+
 	@PostMapping("/")
 	public void addStudents(@RequestBody Student student) {
 		studentRepository.save(student);
-	
+
 	}
 
 	@PutMapping("/{city}")
 	public void addStudents(@RequestBody Student student, @PathVariable String city) {
 		student.setCity(city);
 		studentRepository.save(student);
-	
-	}	
+
+	}
+
 	@DeleteMapping("/{id}")
 	public void deleteStudents(@RequestBody Student student, @PathVariable String id) {
 		studentRepository.deleteById(id);
-	
-	}	
-	
+
+	}
+
 	@DeleteMapping("/")
 	public void deleteAll() {
 		studentRepository.deleteAll();
-	
+
 	}
-	
-	
-	
+
+
 	@GetMapping("/filterlt/{number}")
-	public List <Student> filterStudentlt(@PathVariable Integer number) {
-		return mongoTemplate.find(query(where("salary").lt(number)) , Student.class);
-	// .and("id").gt(3))
+	public List<Student> filterStudentlt(@PathVariable Integer number) {
+		return mongoTemplate.find(query(where("salary").lt(number)), Student.class);
+		// .and("id").gt(3))
 //		AggregationOperation
 //		Aggregation aggregation2
 //				= Aggregation.group().sum().
@@ -89,19 +91,18 @@ public class StudentController {
 //				.sum("pop").as("statePop");
 //		mongoTemplate.
 	}
-	
-	
-	
+
+
 	@GetMapping("/filterltgt/{lt}/{gt}")
-	public List <Student> filterStudentltgt(@PathVariable Integer lt, @PathVariable Integer gt) {
-		return mongoTemplate.find(query(where("salary").lt(lt).gte(gt)) , Student.class);
-	// 
+	public List<Student> filterStudentltgt(@PathVariable Integer lt, @PathVariable Integer gt) {
+		return mongoTemplate.find(query(where("salary").lt(lt).gte(gt)), Student.class);
+		//
 	}
 
 
 	@GetMapping("/filterin")
-	public List <Student> filterStudentin() {
-		return mongoTemplate.find(query(where("salary").in(500000, 20000, 10000).and("id").is("4")) , Student.class);
+	public List<Student> filterStudentin() {
+		return mongoTemplate.find(query(where("salary").in(500000, 20000, 10000).and("id").is("4")), Student.class);
 		//
 	}
 //
@@ -112,16 +113,12 @@ public class StudentController {
 //	}
 
 
-
-
 	@GetMapping("/filterne")
-	public List <Student> filterStudentne() {
-	return mongoTemplate.find(query(where("salary").ne(10000).and("id").ne("7")) , Student.class);
+	public List<Student> filterStudentne() {
+		return mongoTemplate.find(query(where("salary").ne(10000).and("id").ne("7")), Student.class);
 
-	// 
+		//
 	}
-
-
 
 
 	@GetMapping("/page/{pageno}")
@@ -171,9 +168,6 @@ public class StudentController {
 	}
 
 
-
-
-
 	@GetMapping("/groupBySalaryAndSum")
 	public Document grouping() {
 
@@ -192,7 +186,6 @@ public class StudentController {
 	}
 
 
-
 	@GetMapping("/groupBySalaryAndCount")
 	public Document counting() {
 		MatchOperation salFilter = match(new Criteria("salary").gt(20000));
@@ -208,19 +201,26 @@ public class StudentController {
 
 	}
 
-
 	@GetMapping("/groupByCityAndAvgSalary")
 	public Document Avg() {
 		MatchOperation salFilter = match(new Criteria("salary").gt(20000));
-//		MatchOperation salFilter = match(Filters.)
 		GroupOperation countSalaries = group("city").avg("salary").as("avg");
 		SortOperation sortBySalaryDesc = sort(Sort.by(Sort.Direction.DESC, "avg"));
 
 		Aggregation aggregation = newAggregation(salFilter, countSalaries, sortBySalaryDesc);
 		AggregationResults<Student> result = mongoTemplate.aggregate(
 				aggregation, "student", Student.class);
+
 		System.out.print(result);
 		return result.getRawResults();
 
 	}
+
+
+	@GetMapping("/inc/{city}/{increment}")
+	public UpdateResult incSalary(@PathVariable String city, @PathVariable Long increment) {
+		return mongoTemplate.updateMulti(Query.query(Criteria.where("city").is(city)), new Update().inc("salary", increment),Student.class);
+		//
+	}
+
 }
