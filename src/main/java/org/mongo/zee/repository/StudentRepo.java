@@ -6,9 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentRepo {
-	
-	@Autowired
-	private MongoTemplate mongoTemplate;
+
 	
 	
 	

@@ -1,6 +1,10 @@
 package org.mongo.zee.controller;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -8,6 +12,8 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.mongo.zee.model.Student;
 import org.mongo.zee.repository.StudentRepo;
 import org.mongo.zee.repository.StudentRepository;
@@ -28,6 +34,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 @RestController
@@ -219,8 +228,42 @@ public class StudentController {
 
 	@GetMapping("/inc/{city}/{increment}")
 	public UpdateResult incSalary(@PathVariable String city, @PathVariable Long increment) {
-		return mongoTemplate.updateMulti(Query.query(Criteria.where("city").is(city)), new Update().inc("salary", increment),Student.class);
+		return mongoTemplate.updateMulti(Query.query(Criteria.where("city").is(city))
+				, new Update().inc("salary", increment), Student.class);
 		//
 	}
 
+
+	@GetMapping("/json")
+	public JSONObject jsonFile() throws IOException, ParseException {
+		FileReader fileReader = new FileReader("src/main/java/org/mongo/zee/controller/data2.json");
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(fileReader);
+
+		for (Object keyStr : jsonObject.keySet()) {
+			Object keyvalue = jsonObject.get(keyStr);
+			System.out.println("key: " + keyStr + " value: " + keyvalue);
+		}
+
+		return jsonObject;
+	}
+
+
+	@GetMapping("/json2")
+	public JSONObject jsonFileo() throws IOException, ParseException {
+		FileReader fileReader = new FileReader("src/main/java/org/mongo/zee/controller/data2.json");
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(fileReader);
+
+		for (Object keyStr : jsonObject.keySet()) {
+			JSONObject inner = (JSONObject) jsonObject.get(keyStr);
+			for (Object innervalue : inner.keySet()){
+				if(innervalue.equals("title"))
+				System.out.println("key: " + innervalue + " value: " + inner.get(innervalue));
+			}
+
+		}
+		return jsonObject;
+
+	}
 }
