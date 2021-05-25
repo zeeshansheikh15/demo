@@ -2,9 +2,7 @@ package org.mongo.zee.controller;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -250,20 +248,24 @@ public class StudentController {
 
 
 	@GetMapping("/json2")
-	public JSONObject jsonFileo() throws IOException, ParseException {
+	public JSONArray jsonFileo() throws IOException, ParseException {
 		FileReader fileReader = new FileReader("src/main/java/org/mongo/zee/controller/data2.json");
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(fileReader);
-
+		JSONArray jsonArray = new JSONArray();
 		for (Object keyStr : jsonObject.keySet()) {
 			JSONObject inner = (JSONObject) jsonObject.get(keyStr);
 			for (Object innervalue : inner.keySet()){
-				if(innervalue.equals("title"))
-				System.out.println("key: " + innervalue + " value: " + inner.get(innervalue));
+				if(innervalue.equals("title")) {
+					JSONObject jsonObject1 = new JSONObject();
+					jsonObject1.put(innervalue, inner.get(innervalue));
+					jsonArray.add(jsonObject1);
+					System.out.println("key: " + innervalue + " value: " + inner.get(innervalue));
+				}
 			}
 
 		}
-		return jsonObject;
+		return jsonArray;
 
 	}
 }
