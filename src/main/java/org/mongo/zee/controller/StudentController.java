@@ -234,7 +234,7 @@ public class StudentController {
 
 	@GetMapping("/json")
 	public JSONObject jsonFile() throws IOException, ParseException {
-		FileReader fileReader = new FileReader("src/main/java/org/mongo/zee/controller/data2.json");
+		FileReader fileReader = new FileReader("src/main/resources/data2.json");
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(fileReader);
 
@@ -249,7 +249,7 @@ public class StudentController {
 
 	@GetMapping("/json2")
 	public JSONArray jsonFileo() throws IOException, ParseException {
-		FileReader fileReader = new FileReader("src/main/java/org/mongo/zee/controller/data2.json");
+		FileReader fileReader = new FileReader("src/main/resources/data2.json");
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(fileReader);
 		JSONArray jsonArray = new JSONArray();
@@ -268,4 +268,5 @@ public class StudentController {
 		return jsonArray;
 
 	}
+
 }
