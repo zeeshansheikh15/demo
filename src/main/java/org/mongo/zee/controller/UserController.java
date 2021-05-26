@@ -44,6 +44,18 @@ public class UserController {
         return jsonArray;
     }
 
+    @GetMapping("/livepnlandresultnamefunc")
+    public List<UserLiability> getUserLivepnlandresultname(){
+        return userRepository.findByresultNameAndUserlivepnlGreaterThan("Player B", 100);
+    }
+
+    @GetMapping("/notuseridandisactivefunc")
+    public List<UserLiability> notuseridandisactive(){
+        String[] arr = {"5bed21404aa1a721d46facff","rohit22","tinku011"};
+        return userRepository.findByIsactiveAndUseridNotIn(true, arr);
+    }
+
+
     @GetMapping("/notuseridandisactive")
     public List<UserLiability> getAllNotUserIdandisactive(){
         MatchOperation isactive = match(Criteria.where("isactive").is(true)
@@ -58,6 +70,7 @@ public class UserController {
         Aggregation aggregation = newAggregation(userlivepnl);
         return mongoTemplate.aggregate(aggregation, "liability", UserLiability.class).getMappedResults();
     }
+
 
 
 }

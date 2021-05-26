@@ -13,7 +13,6 @@ import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mongo.zee.model.Student;
-import org.mongo.zee.repository.StudentRepo;
 import org.mongo.zee.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,7 +41,6 @@ public class StudentController {
 
 	private StudentRepository studentRepository;
 
-	private StudentRepo studentRepo;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;

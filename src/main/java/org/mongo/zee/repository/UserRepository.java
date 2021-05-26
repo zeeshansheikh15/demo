@@ -13,4 +13,7 @@ public interface UserRepository extends MongoRepository<UserLiability, String> {
 
     List<UserLiability> findByuseridAndIsactive(String UserId, Boolean isactive);
 
+    List<UserLiability> findByresultNameAndUserlivepnlGreaterThan(String resultName, int userlivepnl);
+
+    List<UserLiability> findByIsactiveAndUseridNotIn(Boolean isactive, String[] userid);
 }
