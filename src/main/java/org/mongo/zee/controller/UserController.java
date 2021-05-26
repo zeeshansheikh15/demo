@@ -44,7 +44,6 @@ public class UserController {
         return jsonArray;
     }
 
-
     @GetMapping("/notuseridandisactive")
     public List<UserLiability> getAllNotUserIdandisactive(){
         MatchOperation isactive = match(Criteria.where("isactive").is(true)
