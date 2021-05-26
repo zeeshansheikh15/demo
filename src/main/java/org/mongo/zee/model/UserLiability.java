@@ -33,6 +33,7 @@ public class UserLiability {
 	@Indexed
 	private String date;
 	private Double totalpnl;
+	private Double userlivepnl;
 	
 	private Double totalfancyStake;
 	private Double liability;
@@ -1021,5 +1022,13 @@ public class UserLiability {
 	public void setPnl4(Double pnl4) {
 		this.pnl4 = pnl4;
 	}
-	
+
+
+	public Double getUserlivepnl() {
+		return userlivepnl;
+	}
+
+	public void setUserlivepnl(Double userlivepnl) {
+		this.userlivepnl = userlivepnl;
+	}
 }
