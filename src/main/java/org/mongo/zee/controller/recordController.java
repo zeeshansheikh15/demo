@@ -8,9 +8,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.google.gson.*;
-
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,7 +23,7 @@ public class recordController {
     ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>();
 
     @GetMapping("/records")
-    public String fetchResults(Model model) throws JsonIOException, JsonSyntaxException, IOException, ParseException {
+    public String fetchResults(Model model) throws IOException, ParseException {
         JSONArray jsonArray= (JSONArray) getConn().get("data");
 //        return getCount(jsonArray);
         model.addAttribute("count", getCount(jsonArray) );
@@ -34,7 +31,7 @@ public class recordController {
     }
 
     @GetMapping("/recordsTotal")
-    public String fetchResultsTotal(Model model) throws JsonIOException, JsonSyntaxException, IOException, ParseException {
+    public String fetchResultsTotal(Model model) throws IOException, ParseException {
         JSONArray jsonArray= (JSONArray) getConn().get("data");
         model.addAttribute("map", getTotal(jsonArray) );
         return "home2";
