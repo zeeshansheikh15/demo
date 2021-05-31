@@ -25,7 +25,6 @@ public class recordController {
     @GetMapping("/records")
     public String fetchResults(Model model) throws IOException, ParseException {
         JSONArray jsonArray= (JSONArray) getConn().get("data");
-//        return getCount(jsonArray);
         model.addAttribute("count", getCount(jsonArray) );
         return "home";
     }
