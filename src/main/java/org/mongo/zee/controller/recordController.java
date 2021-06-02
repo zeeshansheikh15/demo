@@ -12,95 +12,26 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mongo.zee.services.RecordService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class recordController {
 
-    ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>();
+    private RecordService recordService;
 
     @GetMapping("/records")
     public String fetchResults(Model model) throws IOException, ParseException {
-        JSONArray jsonArray= (JSONArray) getConn().get("data");
-        model.addAttribute("count", getCount(jsonArray) );
+        model.addAttribute("count", recordService.getCount() );
         return "home";
     }
 
     @GetMapping("/recordsTotal")
     public String fetchResultsTotal(Model model) throws IOException, ParseException {
-        JSONArray jsonArray= (JSONArray) getConn().get("data");
-        model.addAttribute("map", getTotal(jsonArray) );
+        model.addAttribute("map", recordService.getTotal() );
         return "home2";
-    }
-
-
-
-    public int getCount(JSONArray jsonArray){
-        int count=0;
-        for (Object keyStr : jsonArray) {
-            JSONObject jsonObject1 = (JSONObject) keyStr;
-            if(Integer.parseInt(jsonObject1.get("team1goals").toString()) == Integer.parseInt(jsonObject1.get("team2goals").toString()))
-                count++;
-        }
-        return count;
-    }
-
-
-    public JSONObject getConn() throws IOException, ParseException {
-
-        String url = "https://jsonmock.hackerrank.com/api/football_matches?year=2011&page=1"; //just a string
-        JSONObject jsonObject;
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            StringBuilder sb = new StringBuilder();
-            int cp;
-            while ((cp = rd.read()) != -1) {
-                sb.append((char) cp);
-            }
-            JSONParser jsonParser = new JSONParser();
-            jsonObject = (JSONObject) jsonParser.parse(sb.toString());
-
-        } finally {
-            is.close();
-        }
-        return jsonObject;
-    }
-
-    public ConcurrentHashMap<String, Integer> getTotal(JSONArray jsonArray){
-        for (Object keyStr : jsonArray) {
-            JSONObject jsonObject1 = (JSONObject) keyStr;
-            if(map.isEmpty()){
-                System.out.print("str");
-                map.put("0", 0);
-            }
-            for(String str : map.keySet()){
-                System.out.print("str");
-                if(jsonObject1.get("team1").toString().equalsIgnoreCase(str)){
-                    int score = map.get(jsonObject1.get("team1"));
-                    System.out.print(score);
-                    int newscore = score + Integer.parseInt(jsonObject1.get("team1goals").toString());
-                    System.out.println(newscore);
-                    map.replace(jsonObject1.get("team1").toString(), score, newscore);
-                }
-                else {
-                    map.put(jsonObject1.get("team1").toString(), Integer.parseInt(jsonObject1.get("team1goals").toString()));
-                }
-
-                if(jsonObject1.get("team2").toString().equalsIgnoreCase(str)){
-                    int score = map.get(jsonObject1.get("team2"));
-                    int newscore = score + Integer.parseInt(jsonObject1.get("team2goals").toString());
-                    map.replace(jsonObject1.get("team2").toString(), score, newscore);
-                }
-                else{
-                    map.put(jsonObject1.get("team2").toString(), Integer.parseInt(jsonObject1.get("team2goals").toString()));
-                }
-           }
-        }
-        return map;
     }
 
 }
