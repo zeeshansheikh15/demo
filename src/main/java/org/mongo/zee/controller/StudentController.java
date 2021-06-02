@@ -12,6 +12,8 @@ import org.mongo.zee.StudentDao.StudentDaoImpl;
 import org.mongo.zee.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +32,8 @@ public class StudentController {
 	private StudentDaoImpl studentDao;
 
 	@GetMapping("/{pageno}")
-	public Page<Student> getStudents(@PathVariable Integer pageno) {
-		return studentDao.getByPage(pageno);
+	public ResponseEntity<Page<Student>> getStudents(@PathVariable Integer pageno) {
+		return new ResponseEntity<>(studentDao.getByPage(pageno), HttpStatus.OK);
 	}
 
 	@PostMapping("/")
@@ -56,84 +58,84 @@ public class StudentController {
 
 
 	@GetMapping("/filterlt/{number}")
-	public List<Student> filterStudentlt(@PathVariable Integer number) {
-		return studentDao.filterStudentless(number);
+	public ResponseEntity<List<Student>> filterStudentlt(@PathVariable Integer number) {
+		return new ResponseEntity<>(studentDao.filterStudentless(number), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/filterltgt/{lt}/{gt}")
-	public List<Student> filterStudentltgt(@PathVariable Integer lt, @PathVariable Integer gt) {
-		return studentDao.filterStudentltgt(lt, gt);
+	public ResponseEntity<List<Student>> filterStudentltgt(@PathVariable Integer lt, @PathVariable Integer gt) {
+		return new ResponseEntity<>(studentDao.filterStudentltgt(lt, gt), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/filterin")
-	public List<Student> filterStudentin() {
-		return studentDao.filterStudentin();
+	public ResponseEntity<List<Student>> filterStudentin() {
+		return new ResponseEntity<>(studentDao.filterStudentin(), HttpStatus.OK);
 	}
 
 	@GetMapping("/filterne")
-	public List<Student> filterStudentne() {
-		return studentDao.filterStudentne();
+	public ResponseEntity<List<Student>> filterStudentne() {
+		return new ResponseEntity<>(studentDao.filterStudentne(), HttpStatus.OK);
 	}
 
 	@GetMapping("/name/{name}/{pageno}")
-	public List<Student> findbyname(@PathVariable String name, @PathVariable Integer pageno) {
-		return studentDao.findbyname(name, pageno);
+	public ResponseEntity<List<Student>>findbyname(@PathVariable String name, @PathVariable Integer pageno) {
+		return new ResponseEntity<>(studentDao.findbyname(name, pageno), HttpStatus.OK);
 	}
 
 	@GetMapping("/city/{city}/{pageno}")
-	public List<Student> findbycity(@PathVariable String city, @PathVariable Integer pageno) {
-		return studentDao.findbycity(city, pageno);
+	public ResponseEntity<List<Student>> findbycity(@PathVariable String city, @PathVariable Integer pageno) {
+		return new ResponseEntity<>(studentDao.findbycity(city, pageno), HttpStatus.OK);
 	}
 
 	@GetMapping("/salgreat/{great}/{pageno}")
-	public List<Student> salgreat(@PathVariable Integer great, @PathVariable Integer pageno) {
-		return studentDao.salgreat(great, pageno);
+	public ResponseEntity<List<Student>> salgreat(@PathVariable Integer great, @PathVariable Integer pageno) {
+		return new ResponseEntity<>(studentDao.salgreat(great, pageno), HttpStatus.OK);
 	}
 
 	@GetMapping("/salless/{less}/{pageno}")
-	public List<Student> salless(@PathVariable Integer less, @PathVariable Integer pageno) {
-		return studentDao.salless(less, pageno);
+	public ResponseEntity<List<Student>> salless(@PathVariable Integer less, @PathVariable Integer pageno) {
+		return new ResponseEntity<>(studentDao.salless(less, pageno), HttpStatus.OK);
 	}
 
 	@GetMapping("/salbetw/{less}/{great}/{pageno}")
-	public List<Student> salbetw(@PathVariable Integer less, @PathVariable Integer great, @PathVariable Integer pageno) {
-		return  studentDao.salbetw(less, great, pageno);
+	public ResponseEntity<List<Student>> salbetw(@PathVariable Integer less, @PathVariable Integer great, @PathVariable Integer pageno) {
+		return  new ResponseEntity<>(studentDao.salbetw(less, great, pageno), HttpStatus.OK);
 	}
 
 	@GetMapping("/groupBySalaryAndSum")
-	public Document grouping() {
-		return studentDao.grouping();
+	public ResponseEntity<Document> grouping() {
+		return new ResponseEntity<>(studentDao.grouping(), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/groupBySalaryAndCount")
-	public Document counting() {
-		return studentDao.counting();
+	public ResponseEntity<Document> counting() {
+		return new ResponseEntity<>(studentDao.counting(), HttpStatus.OK);
 	}
 
 	@GetMapping("/groupByCityAndAvgSalary")
-	public Document Avg() {
-		return studentDao.Avg();
+	public ResponseEntity<Document> Avg() {
+		return new ResponseEntity<>(studentDao.Avg(), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/inc/{city}/{increment}")
-	public UpdateResult incSalary(@PathVariable String city, @PathVariable Long increment) {
-		return studentDao.incSalary(city, increment);
+	public ResponseEntity<UpdateResult> incSalary(@PathVariable String city, @PathVariable Long increment) {
+		return new ResponseEntity<>(studentDao.incSalary(city, increment), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/json")
-	public JSONObject jsonFile() throws IOException, ParseException {
-		return studentDao.jsonFile();
+	public ResponseEntity<JSONObject> jsonFile() throws IOException, ParseException {
+		return new ResponseEntity<>(studentDao.jsonFile(), HttpStatus.OK);
 	}
 
 
 	@GetMapping("/json2")
-	public JSONArray jsonFileo() throws IOException, ParseException {
-		return studentDao.jsonFileo();
+	public ResponseEntity<JSONArray> jsonFileo() throws IOException, ParseException {
+		return new ResponseEntity<>(studentDao.jsonFileo(), HttpStatus.OK);
 	}
 
 }

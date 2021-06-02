@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,39 +32,39 @@ public class UserController {
     private UserDaoImpl userDao;
 
     @GetMapping("/users")
-    public List<UserLiability> getAllUsers(){
-        return userDao.getAllUsers();
+    public ResponseEntity<List<UserLiability>> getAllUsers(){
+        return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/userid")
-    public List<UserLiability> getAllUserId(){
-        return userDao.getAllUserId();
+    public ResponseEntity<List<UserLiability>> getAllUserId(){
+        return new ResponseEntity<>(userDao.getAllUserId(), HttpStatus.OK);
     }
 
     @GetMapping("/useridandisactive")
-    public JSONArray getAllUserIdandisactive(){
-        return userDao.getAllUserIdandisactive();
+    public ResponseEntity<JSONArray> getAllUserIdandisactive(){
+        return new ResponseEntity<>(userDao.getAllUserIdandisactive(), HttpStatus.OK);
     }
 
     @GetMapping("/livepnlandresultnamefunc")
-    public List<UserLiability> getUserLivepnlandresultname(){
-        return userDao.getUserLivepnlandresultname();
+    public ResponseEntity<List<UserLiability>> getUserLivepnlandresultname(){
+        return new ResponseEntity<>(userDao.getUserLivepnlandresultname(), HttpStatus.OK);
     }
 
     @GetMapping("/notuseridandisactivefunc")
-    public List<UserLiability> notuseridandisactive(){
-        return userDao.notuseridandisactive();
+    public ResponseEntity<List<UserLiability>> notuseridandisactive(){
+        return new ResponseEntity<>(userDao.notuseridandisactive(), HttpStatus.OK);
     }
 
 
     @GetMapping("/notuseridandisactive")
-    public List<UserLiability> getAllNotUserIdandisactive(){
-        return userDao.getAllNotUserIdandisactive();
+    public ResponseEntity<List<UserLiability>> getAllNotUserIdandisactive(){
+        return new ResponseEntity<>(userDao.getAllNotUserIdandisactive(), HttpStatus.OK);
     }
 
     @GetMapping("/livepnlandresultname")
-    public List<UserLiability> getAllUserLivepnlandresultname(){
-        return userDao.getAllUserLivepnlandresultname();
+    public ResponseEntity<List<UserLiability>> getAllUserLivepnlandresultname(){
+        return new ResponseEntity<>(userDao.getAllUserLivepnlandresultname(), HttpStatus.OK);
     }
 
 
