@@ -51,10 +51,6 @@ public class StudentController {
 
 	@GetMapping("/{pageno}")
 	public Page<Student> getStudents(@PathVariable Integer pageno) {
-		List<Student> li = studentRepository.findAll();
-		for (Student stu : li) {
-			System.out.print(stu.getName());
-		}
 		Pageable paging = PageRequest.of(pageno, 3, Sort.Direction.ASC, "salary");
 		return studentRepository.findAll(paging);
 	}
