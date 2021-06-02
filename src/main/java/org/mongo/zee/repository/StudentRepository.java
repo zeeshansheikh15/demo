@@ -21,4 +21,5 @@ public interface StudentRepository extends MongoRepository<Student, String>{
     List<Student> findBySalaryLessThan(int number, Pageable page);
 
     List<Student> findBySalaryBetween(int number1, int number2, Pageable page);
+
 }
