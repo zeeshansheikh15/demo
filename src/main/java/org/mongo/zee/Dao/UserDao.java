@@ -1,4 +1,4 @@
-package org.mongo.zee.UserDao;
+package org.mongo.zee.Dao;
 
 import org.json.simple.JSONArray;
 import org.mongo.zee.model.UserLiability;

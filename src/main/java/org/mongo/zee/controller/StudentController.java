@@ -8,7 +8,7 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.mongo.zee.StudentDao.StudentDaoImpl;
+import org.mongo.zee.DaoImpl.StudentDaoImpl;
 import org.mongo.zee.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

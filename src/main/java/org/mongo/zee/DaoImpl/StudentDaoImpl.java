@@ -1,4 +1,4 @@
-package org.mongo.zee.StudentDao;
+package org.mongo.zee.DaoImpl;
 
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mongo.zee.Dao.StudentDao;
 import org.mongo.zee.model.Student;
 import org.mongo.zee.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -31,7 +32,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
-public class StudentDaoImpl implements StudentDao{
+public class StudentDaoImpl implements StudentDao {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -78,7 +79,11 @@ public class StudentDaoImpl implements StudentDao{
 
     @Override
     public List<Student> filterStudentin() {
-        return mongoTemplate.find(query(where("salary").in(500000, 20000, 10000).and("id").is("4")), Student.class);
+        ArrayList<Criteria> criterias = new ArrayList<>();
+        criterias.add(Criteria.where("salary").in(500000, 20000, 10000));
+        criterias.add(Criteria.where("id").is("4"));
+        Criteria criteria = new Criteria().andOperator(criterias.toArray(new Criteria[criterias.size()]));
+        return mongoTemplate.find(query(criteria), Student.class);
     }
 
     @Override

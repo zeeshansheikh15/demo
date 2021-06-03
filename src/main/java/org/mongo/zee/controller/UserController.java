@@ -1,7 +1,7 @@
 package org.mongo.zee.controller;
 
 import org.json.simple.JSONArray;
-import org.mongo.zee.UserDao.UserDaoImpl;
+import org.mongo.zee.DaoImpl.UserDaoImpl;
 import org.mongo.zee.model.UserLiability;
 import org.mongo.zee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

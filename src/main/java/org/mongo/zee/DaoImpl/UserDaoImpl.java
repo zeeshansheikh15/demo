@@ -1,6 +1,7 @@
-package org.mongo.zee.UserDao;
+package org.mongo.zee.DaoImpl;
 
 import org.json.simple.JSONArray;
+import org.mongo.zee.Dao.UserDao;
 import org.mongo.zee.model.UserLiability;
 import org.mongo.zee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.matc
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 @Service
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     private MongoTemplate mongoTemplate;

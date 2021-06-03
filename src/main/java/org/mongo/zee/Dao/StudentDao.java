@@ -1,4 +1,4 @@
-package org.mongo.zee.StudentDao;
+package org.mongo.zee.Dao;
 
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
