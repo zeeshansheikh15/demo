@@ -27,38 +27,59 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<UserLiability>> getAllUsers(){
-        return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.OK);
+        if(userDao.getAllUsers()!=null)
+            return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getAllUsers(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/userid")
     public ResponseEntity<List<UserLiability>> getAllUserId(){
-        return new ResponseEntity<>(userDao.getAllUserId(), HttpStatus.OK);
+        if(userDao.getAllUserId()!=null)
+            return new ResponseEntity<>(userDao.getAllUserId(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getAllUserId(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/useridandisactive")
     public ResponseEntity<JSONArray> getAllUserIdandisactive(){
-        return new ResponseEntity<>(userDao.getAllUserIdandisactive(), HttpStatus.OK);
+        if(userDao.getAllUserIdandisactive()!=null)
+            return new ResponseEntity<>(userDao.getAllUserIdandisactive(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getAllUserIdandisactive(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/livepnlandresultnamefunc")
     public ResponseEntity<List<UserLiability>> getUserLivepnlandresultname(){
-        return new ResponseEntity<>(userDao.getUserLivepnlandresultname(), HttpStatus.OK);
+        if(userDao.getUserLivepnlandresultname()!=null)
+            return new ResponseEntity<>(userDao.getUserLivepnlandresultname(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getUserLivepnlandresultname(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/notuseridandisactivefunc")
     public ResponseEntity<List<UserLiability>> notuseridandisactive(){
-        return new ResponseEntity<>(userDao.notuseridandisactive(), HttpStatus.OK);
+        if(userDao.notuseridandisactive()!=null)
+            return new ResponseEntity<>(userDao.notuseridandisactive(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.notuseridandisactive(), HttpStatus.NO_CONTENT);
     }
 
 
     @GetMapping("/notuseridandisactive")
     public ResponseEntity<List<UserLiability>> getAllNotUserIdandisactive(){
-        return new ResponseEntity<>(userDao.getAllNotUserIdandisactive(), HttpStatus.OK);
+        if(userDao.getAllNotUserIdandisactive()!=null)
+            return new ResponseEntity<>(userDao.getAllNotUserIdandisactive(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getAllNotUserIdandisactive(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/livepnlandresultname")
     public ResponseEntity<List<UserLiability>> getAllUserLivepnlandresultname(){
-        return new ResponseEntity<>(userDao.getAllUserLivepnlandresultname(), HttpStatus.OK);
+        if(userDao.getAllUserLivepnlandresultname()!=null)
+            return new ResponseEntity<>(userDao.getAllUserLivepnlandresultname(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(userDao.getAllUserLivepnlandresultname(), HttpStatus.NO_CONTENT);
     }
 
 

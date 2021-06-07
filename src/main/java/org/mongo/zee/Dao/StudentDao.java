@@ -15,9 +15,9 @@ public interface StudentDao {
 
     Page<Student> getByPage(int page);
 
-    void saveStudent(Student student);
+    Student saveStudent(Student student);
 
-    void saveStudent(Student student, String city);
+    Student saveStudent(Student student, String city);
 
     void deleteStudent(Student student, String id);
 

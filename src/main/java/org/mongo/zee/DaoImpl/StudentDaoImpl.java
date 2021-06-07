@@ -47,14 +47,14 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void saveStudent(Student student) {
-        studentRepository.save(student);
+    public Student saveStudent(Student student) {
+         return studentRepository.save(student);
     }
 
     @Override
-    public void saveStudent(Student student, String city) {
+    public Student saveStudent(Student student, String city) {
         student.setCity(city);
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
 
     @Override
