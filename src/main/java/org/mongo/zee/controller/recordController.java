@@ -26,4 +26,10 @@ public class recordController {
         return "home2";
     }
 
+    @GetMapping("/odd")
+    public String odd(Model model) throws IOException, ParseException {
+        model.addAttribute("map", "l" );
+        return "home3";
+    }
+
 }
