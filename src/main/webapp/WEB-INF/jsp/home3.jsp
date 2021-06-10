@@ -3,25 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello jsp</title>
-<script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+$(document).ready(function(){
+NodeBookConnect();
+});
+
 function NodeBookConnect(){
-console.log('Book Connection started');
-		ndbooksocket = io.connect('http://142.93.218.10:3000', {transports: ['websocket']});
+	var Parent = "Event/Auto";
+    var data =  "30424356";
+	var SocketUrl = Parent+'/'+data;
+	console.log(SocketUrl)
+	
+	var ndbooksocket = io('http://142.93.218.10:3000', {transports: ['websocket']});
 		ndbooksocket.on('connect', () => {
 		console.log('Book Connection Established');
 		});
 
-		ndbooksocket.on('disconnect', () => {
+    ndbooksocket.emit(Parent, data);
+
+	ndbooksocket.on(SocketUrl, (message) => {
+			 console.log(message);
+			 });
+
+	ndbooksocket.on('disconnect', () => {
 	  console.log('Book Connection Closed');
 	  NodeBookConnect();
-	});
+	    });
 	}
 
-        </script>
+</script>
 </head>
-<body onload="NodeBookConnect()">
+<body >
 
     <h2 class="hello-title">Hello jsp count is  zzzzzzzzzzzzzzzzzzz</h2>
 
